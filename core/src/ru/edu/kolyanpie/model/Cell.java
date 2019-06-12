@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class Cell extends Actor {
     private State state;
-    private Sprite sprite = new Sprite(new Texture(Gdx.files.internal("cell.png")));
+    private static Sprite sprite = new Sprite(new Texture(Gdx.files.internal("cell.png")));
 
     public Cell() {
         initialize();
@@ -25,27 +25,27 @@ public class Cell extends Actor {
         State.BLUE.setColor(blue);
     }
 
-    public void setRedColor(Color color) {
+    public static void setRedColor(Color color) {
         State.RED.setColor(color);
     }
 
-    public void setBlueColor(Color color) {
+    public static void setBlueColor(Color color) {
         State.BLUE.setColor(color);
     }
 
-    public void setEmptyColor(Color color) {
+    public static void setEmptyColor(Color color) {
         State.EMPTY.setColor(color);
     }
 
-    public Color getRedColor() {
+    public static Color getRedColor() {
         return State.RED.getColor();
     }
 
-    public Color getBlueColor() {
+    public static Color getBlueColor() {
         return State.BLUE.getColor();
     }
 
-    public Color getEmptyColor() {
+    public static Color getEmptyColor() {
         return State.EMPTY.getColor();
     }
 
