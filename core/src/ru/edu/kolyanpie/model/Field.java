@@ -54,6 +54,40 @@ public class Field extends Stage {
         getViewport().update(width, height, true);
     }
 
+    public Color getEmptyColor() {
+        return Cell.getEmptyColor();
+    }
+
+    public void setEmptyColor(Color emptyColor) {
+        Cell.setEmptyColor(emptyColor);
+    }
+
+    public Color getFieldColor() {
+        return fieldColor;
+    }
+
+    public void setFieldColor(Color fieldColor) {
+        this.fieldColor = fieldColor;
+    }
+
+    public Color getBlueColor() {
+        return blueColor;
+    }
+
+    public void setBlueColor(Color blueColor) {
+        this.blueColor = blueColor;
+        Cell.setBlueColor(blueColor);
+    }
+
+    public Color getRedColor() {
+        return redColor;
+    }
+
+    public void setRedColor(Color redColor) {
+        this.redColor = redColor;
+        Cell.setRedColor(redColor);
+    }
+
     @Override
     public void draw() {
         Batch batch = getBatch();
@@ -93,5 +127,6 @@ public class Field extends Stage {
                 addActor(cell);
             }
         }
+        isLand = Gdx.graphics.getHeight() > Gdx.graphics.getWidth();
     }
 }
