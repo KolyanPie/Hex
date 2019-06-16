@@ -10,11 +10,11 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-public class Cell extends Actor {
+class Cell extends Actor {
     private State state;
     private static Sprite sprite = new Sprite(new Texture(Gdx.files.internal("cell.png")));
 
-    public Cell() {
+    Cell() {
         initialize();
     }
 
@@ -25,40 +25,40 @@ public class Cell extends Actor {
         State.BLUE.setColor(blue);
     }
 
-    public static void setRedColor(Color color) {
-        State.RED.setColor(color);
-    }
-
-    public static void setBlueColor(Color color) {
-        State.BLUE.setColor(color);
-    }
-
-    public static void setEmptyColor(Color color) {
-        State.EMPTY.setColor(color);
-    }
-
-    public static Color getRedColor() {
-        return State.RED.getColor();
-    }
-
-    public static Color getBlueColor() {
-        return State.BLUE.getColor();
-    }
-
-    public static Color getEmptyColor() {
+    static Color getEmptyColor() {
         return State.EMPTY.getColor();
     }
 
-    public boolean setRed() {
+    static void setEmptyColor(Color color) {
+        State.EMPTY.setColor(color);
+    }
+
+    static Color getBlueColor() {
+        return State.BLUE.getColor();
+    }
+
+    static void setBlueColor(Color color) {
+        State.BLUE.setColor(color);
+    }
+
+    static Color getRedColor() {
+        return State.RED.getColor();
+    }
+
+    static void setRedColor(Color color) {
+        State.RED.setColor(color);
+    }
+
+    boolean setBlue() {
         if (isEmpty()) {
-            state = State.RED;
+            state = State.BLUE;
         }
         return false;
     }
 
-    public boolean setBlue() {
+    boolean setRed() {
         if (isEmpty()) {
-            state = State.BLUE;
+            state = State.RED;
         }
         return false;
     }
@@ -103,7 +103,6 @@ public class Cell extends Actor {
         setTouchable(Touchable.enabled);
         addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println(1);
                 if (!isEmpty()) {
                     return;
                 }
@@ -114,8 +113,8 @@ public class Cell extends Actor {
 
     private enum State {
         EMPTY(new Color(1, 1, 1, 1)),
-        RED(new Color(1, 0, 0, 1)),
-        BLUE(new Color(0, 0, 1, 1));
+        BLUE(new Color(0, 0, 1, 1)),
+        RED(new Color(1, 0, 0, 1));
 
         private Color color;
 
