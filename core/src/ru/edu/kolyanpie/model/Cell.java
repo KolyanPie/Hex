@@ -11,18 +11,13 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 class Cell extends Actor {
+    private Field field;
     private State state;
     private static Sprite sprite = new Sprite(new Texture(Gdx.files.internal("cell.png")));
 
-    Cell() {
+    Cell(Field field) {
+        this.field = field;
         initialize();
-    }
-
-    public Cell(Color empty, Color red, Color blue) {
-        initialize();
-        State.EMPTY.setColor(empty);
-        State.RED.setColor(red);
-        State.BLUE.setColor(blue);
     }
 
     static Color getEmptyColor() {
@@ -101,12 +96,13 @@ class Cell extends Actor {
     private void initialize() {
         state = State.EMPTY;
         setTouchable(Touchable.enabled);
+        final Cell link = this;
         addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 if (!isEmpty()) {
                     return;
                 }
-                //TODO: some action
+                field.cellClicked(link);
             }
         });
     }
