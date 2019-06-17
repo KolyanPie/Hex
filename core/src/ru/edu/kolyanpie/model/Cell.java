@@ -47,6 +47,7 @@ class Cell extends Actor {
     boolean setBlue() {
         if (isEmpty()) {
             state = State.BLUE;
+            return true;
         }
         return false;
     }
@@ -54,6 +55,7 @@ class Cell extends Actor {
     boolean setRed() {
         if (isEmpty()) {
             state = State.RED;
+            return true;
         }
         return false;
     }

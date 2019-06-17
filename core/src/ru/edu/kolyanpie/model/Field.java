@@ -11,15 +11,19 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import java.util.ArrayList;
 import java.util.List;
 
+import ru.edu.kolyanpie.controller.CellClickListener;
+
 public class Field extends Stage {
     private List<List<Cell>> cells;
     private int size;
     private boolean isLand;
     private Sprite field, red, blue;
     private Color fieldColor, redColor, blueColor;
+    private CellClickListener cellClickListener;
 
-    public Field() {
+    public Field(CellClickListener cellClickListener) {
         super(new FitViewport(698, 423));
+        this.cellClickListener = cellClickListener;
         size = 11;
         initialize();
     }
@@ -28,7 +32,6 @@ public class Field extends Stage {
         boolean resize = isLand != height <= width;
         if (resize) {
             isLand = !isLand;
-            System.out.println("debug");
             if (isLand) {
                 getViewport().setWorldSize(698, 423);
                 field = new Sprite(new Texture(Gdx.files.internal("landscape/field.png")));
@@ -52,6 +55,14 @@ public class Field extends Stage {
             }
         }
         getViewport().update(width, height, true);
+    }
+
+    public boolean setBlue(int i, int j) {
+        return cells.get(i).get(j).setBlue();
+    }
+
+    public boolean setRed(int i, int j) {
+        return cells.get(i).get(j).setRed();
     }
 
     public Color getEmptyColor() {
@@ -102,26 +113,33 @@ public class Field extends Stage {
         super.draw();
     }
 
-    @Override
-    public void act(float delta) {
-        super.act(delta);
+    void cellClicked(Cell cell) {
+        int i, j;
+        if (isLand) {
+            j = (int) ((361 - cell.getY()) / 34);
+            i = (int) ((cell.getX() - 30 - j * 20) / 40);
+        } else {
+            j = (int) ((10789 - 17 * cell.getX() - 10 * cell.getY()) / 680);
+            i = (int) ((cell.getX() - 227 + j * 20) / 20);
+        }
+        cellClickListener.cellClicked(i, j);
     }
 
     private void initialize() {
         fieldColor = new Color(0, 0, 0, 1);
-        redColor = new Color(1, 0, 0, 1);
         blueColor = new Color(0, 0, 1, 1);
+        redColor = new Color(1, 0, 0, 1);
         Cell.setBlueColor(blueColor);
         Cell.setRedColor(redColor);
         isLand = true;
-        cells = new ArrayList<List<Cell>>(size);
+        cells = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
-            cells.add(new ArrayList<Cell>(size));
+            cells.add(new ArrayList<>(size));
         }
         Cell cell;
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                cell = new Cell();
+                cell = new Cell(this);
                 cell.setSize(38, 41);
                 cells.get(i).add(cell);
                 addActor(cell);
