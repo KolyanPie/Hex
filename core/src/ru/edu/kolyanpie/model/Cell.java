@@ -11,9 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 class Cell extends Actor {
-    private Field field;
+    private final Field field;
     private State state;
-    private static Sprite sprite = new Sprite(new Texture(Gdx.files.internal("cell.png")));
+    private static final Sprite sprite = new Sprite(new Texture(Gdx.files.internal("cell.png")));
 
     Cell(Field field) {
         this.field = field;

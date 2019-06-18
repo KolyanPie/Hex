@@ -15,11 +15,11 @@ import ru.edu.kolyanpie.controller.CellClickListener;
 
 public class Field extends Stage {
     private List<List<Cell>> cells;
-    private int size;
+    private final int size;
     private boolean isLand;
     private Sprite field, red, blue;
     private Color fieldColor, redColor, blueColor;
-    private CellClickListener cellClickListener;
+    private final CellClickListener cellClickListener;
 
     public Field(CellClickListener cellClickListener) {
         super(new FitViewport(698, 423));
