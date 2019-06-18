@@ -1,7 +1,6 @@
 package ru.edu.kolyanpie.model;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -18,30 +17,6 @@ class Cell extends Actor {
     Cell(Field field) {
         this.field = field;
         initialize();
-    }
-
-    static Color getEmptyColor() {
-        return State.EMPTY.getColor();
-    }
-
-    static void setEmptyColor(Color color) {
-        State.EMPTY.setColor(color);
-    }
-
-    static Color getBlueColor() {
-        return State.BLUE.getColor();
-    }
-
-    static void setBlueColor(Color color) {
-        State.BLUE.setColor(color);
-    }
-
-    static Color getRedColor() {
-        return State.RED.getColor();
-    }
-
-    static void setRedColor(Color color) {
-        State.RED.setColor(color);
     }
 
     boolean setBlue() {
@@ -64,7 +39,17 @@ class Cell extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         sprite.setSize(getWidth(), getHeight());
         sprite.setPosition(getX(), getY());
-        sprite.setColor(state.getColor());
+        switch (state) {
+            case EMPTY:
+                sprite.setColor(field.getEmptyColor());
+                break;
+            case BLUE:
+                sprite.setColor(field.getBlueColor());
+                break;
+            case RED:
+                sprite.setColor(field.getRedColor());
+                break;
+        }
         sprite.draw(batch);
     }
 
@@ -107,25 +92,5 @@ class Cell extends Actor {
                 field.cellClicked(link);
             }
         });
-    }
-
-    private enum State {
-        EMPTY(new Color(1, 1, 1, 1)),
-        BLUE(new Color(0, 0, 1, 1)),
-        RED(new Color(1, 0, 0, 1));
-
-        private Color color;
-
-        private Color getColor() {
-            return color;
-        }
-
-        private void setColor(Color color) {
-            this.color = color;
-        }
-
-        State(Color color) {
-            this.color = color;
-        }
     }
 }

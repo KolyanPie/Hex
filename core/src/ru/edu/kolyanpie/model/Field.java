@@ -18,13 +18,27 @@ public class Field extends Stage {
     private final int size;
     private boolean isLand;
     private Sprite field, red, blue;
-    private Color fieldColor, redColor, blueColor;
+    private Color emptyColor, fieldColor, blueColor, redColor;
     private final CellClickListener cellClickListener;
 
     public Field(CellClickListener cellClickListener) {
         super(new FitViewport(698, 423));
         this.cellClickListener = cellClickListener;
         size = 11;
+        cells = new ArrayList<>(size);
+        for (int i = 0; i < size; i++) {
+            cells.add(new ArrayList<>(size));
+        }
+        Cell cell;
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                cell = new Cell(this);
+                cell.setSize(38, 41);
+                cells.get(i).add(cell);
+                addActor(cell);
+            }
+        }
+        isLand = Gdx.graphics.getHeight() > Gdx.graphics.getWidth();
         initialize();
     }
 
@@ -66,11 +80,11 @@ public class Field extends Stage {
     }
 
     public Color getEmptyColor() {
-        return Cell.getEmptyColor();
+        return emptyColor;
     }
 
     public void setEmptyColor(Color emptyColor) {
-        Cell.setEmptyColor(emptyColor);
+        this.emptyColor = new Color(emptyColor);
     }
 
     public Color getFieldColor() {
@@ -78,7 +92,7 @@ public class Field extends Stage {
     }
 
     public void setFieldColor(Color fieldColor) {
-        this.fieldColor = fieldColor;
+        this.fieldColor = new Color(fieldColor);
     }
 
     public Color getBlueColor() {
@@ -86,8 +100,7 @@ public class Field extends Stage {
     }
 
     public void setBlueColor(Color blueColor) {
-        this.blueColor = blueColor;
-        Cell.setBlueColor(blueColor);
+        this.blueColor = new Color(blueColor);
     }
 
     public Color getRedColor() {
@@ -95,8 +108,7 @@ public class Field extends Stage {
     }
 
     public void setRedColor(Color redColor) {
-        this.redColor = redColor;
-        Cell.setRedColor(redColor);
+        this.redColor = new Color(redColor);
     }
 
     @Override
@@ -127,24 +139,8 @@ public class Field extends Stage {
 
     private void initialize() {
         fieldColor = new Color(0, 0, 0, 1);
+        emptyColor = new Color(1, 1, 1, 1);
         blueColor = new Color(0, 0, 1, 1);
         redColor = new Color(1, 0, 0, 1);
-        Cell.setBlueColor(blueColor);
-        Cell.setRedColor(redColor);
-        isLand = true;
-        cells = new ArrayList<>(size);
-        for (int i = 0; i < size; i++) {
-            cells.add(new ArrayList<>(size));
-        }
-        Cell cell;
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                cell = new Cell(this);
-                cell.setSize(38, 41);
-                cells.get(i).add(cell);
-                addActor(cell);
-            }
-        }
-        isLand = Gdx.graphics.getHeight() > Gdx.graphics.getWidth();
     }
 }
