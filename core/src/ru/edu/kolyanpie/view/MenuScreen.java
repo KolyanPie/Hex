@@ -1,13 +1,8 @@
 package ru.edu.kolyanpie.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -15,8 +10,9 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import ru.edu.kolyanpie.Hex;
 import ru.edu.kolyanpie.view.menu.MainMenuTable;
+import ru.edu.kolyanpie.view.menu.MenuChangeable;
 
-public class MenuScreen implements Screen {
+public class MenuScreen implements Screen, MenuChangeable {
     private final Hex hex;
     private Stage stage;
 
@@ -62,6 +58,7 @@ public class MenuScreen implements Screen {
         stage.dispose();
     }
 
+    @Override
     public void changeMenu(Table table) {
         table.setFillParent(true);
         stage.clear();

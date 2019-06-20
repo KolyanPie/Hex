@@ -21,9 +21,9 @@ public class MainMenuTable extends Table {
     private TextButton aboutButton;
     private TextButton quitButton;
 
-    public MainMenuTable(Skin skin, MenuScreen menuScreen) {
+    public MainMenuTable(Skin skin, MenuChangeable menuChangeable) {
         super(skin);
-        this.menuScreen = menuScreen;
+        menuScreen = (MenuScreen) menuChangeable;
         this.skin = getSkin();
         initialize();
         center();

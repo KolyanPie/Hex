@@ -5,16 +5,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-import ru.edu.kolyanpie.view.MenuScreen;
 import ru.edu.kolyanpie.view.menu.MainMenuTable;
+import ru.edu.kolyanpie.view.menu.MenuChangeable;
 
 public class ToMainMenuButton extends TextButton {
-    public ToMainMenuButton(String text, Skin skin, MenuScreen menuScreen) {
+    public ToMainMenuButton(String text, Skin skin, MenuChangeable menuChangeable) {
         super(text, skin);
         addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                menuScreen.changeMenu(new MainMenuTable(skin, menuScreen));
+                menuChangeable.changeMenu(new MainMenuTable(skin, menuChangeable));
             }
         });
     }
