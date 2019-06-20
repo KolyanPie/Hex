@@ -12,7 +12,6 @@ public class WinChecker {
     private static State current;
 
     public static boolean checkWin(List<List<State>> cells, int i, int j) {
-        System.out.println("checkWin: i = " + i + ", j = " + j);
         current = cells.get(i).get(j);
         if (current.equals(State.EMPTY)) {
             return false;
@@ -32,7 +31,6 @@ public class WinChecker {
         if (i < 0 || i > x || j < 0 || j > y) {
             return false;
         }
-        System.out.println("isWin: i = " + i + ", j = " + j);
         if (!cellsForCheck.get(i).get(j).equals(current)) {
             return false;
         } else if (cellsForCheck.get(i).get(j).equals(State.BLUE)) {
