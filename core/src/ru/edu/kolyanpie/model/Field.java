@@ -42,6 +42,24 @@ public class Field extends Stage {
         initialize();
     }
 
+    public Field(CellClickListener cellClickListener, List<List<State>> cells) {
+        this(cellClickListener);
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                switch (cells.get(i).get(j)) {
+                    case EMPTY:
+                        break;
+                    case BLUE:
+                        this.cells.get(i).get(j).setBlue();
+                        break;
+                    case RED:
+                        this.cells.get(i).get(j).setRed();
+                        break;
+                }
+             }
+        }
+    }
+
     public void resize(int width, int height) {
         boolean resize = isLand != height <= width;
         if (resize) {
