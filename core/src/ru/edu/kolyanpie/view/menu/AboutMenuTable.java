@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import ru.edu.kolyanpie.view.MenuScreen;
+import ru.edu.kolyanpie.view.menu.button.ToMainMenuButton;
 
 class AboutMenuTable extends Table {
     private final MenuScreen menuScreen;
@@ -56,12 +57,6 @@ class AboutMenuTable extends Table {
                 Gdx.net.openURI("https://github.com/KolyanPie/Hex");
             }
         });
-        backButton = new TextButton("BACK", skin);
-        backButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                menuScreen.changeMenu(new MainMenuTable(skin, menuScreen));
-            }
-        });
+        backButton = new ToMainMenuButton("BACK", skin, menuScreen);
     }
 }

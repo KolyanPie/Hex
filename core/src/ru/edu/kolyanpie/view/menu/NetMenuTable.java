@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import ru.edu.kolyanpie.view.MenuScreen;
+import ru.edu.kolyanpie.view.menu.button.ToMainMenuButton;
 
 class NetMenuTable extends Table {
     private final MenuScreen menuScreen;
@@ -34,12 +35,6 @@ class NetMenuTable extends Table {
     }
 
     private void initialize() {
-        backButton = new TextButton("BACK", skin);
-        backButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                menuScreen.changeMenu(new MainMenuTable(skin, menuScreen));
-            }
-        });
+        backButton = new ToMainMenuButton("BACK", skin, menuScreen);
     }
 }
