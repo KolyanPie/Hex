@@ -12,8 +12,8 @@ public class Hex extends Game {
     @Override
     public void create() {
         if (Gdx.app.getType().equals(Application.ApplicationType.Android)) {
-        Gdx.input.setCatchBackKey(true);
-        Gdx.input.setCatchMenuKey(true);
+            Gdx.input.setCatchBackKey(true);
+            Gdx.input.setCatchMenuKey(true);
         }
         setScreen(new MenuScreen(this));
     }
