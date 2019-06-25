@@ -56,7 +56,7 @@ public class Field extends Stage {
                         this.cells.get(i).get(j).setRed();
                         break;
                 }
-             }
+            }
         }
     }
 
@@ -160,5 +160,6 @@ public class Field extends Stage {
         emptyColor = new Color(1, 1, 1, 1);
         blueColor = new Color(0, 0, 1, 1);
         redColor = new Color(1, 0, 0, 1);
+        Cell.setSprite(new Sprite(new Texture(Gdx.files.internal("cell.png"))));
     }
 }
