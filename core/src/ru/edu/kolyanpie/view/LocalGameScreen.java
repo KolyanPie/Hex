@@ -2,6 +2,7 @@ package ru.edu.kolyanpie.view;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 
@@ -12,6 +13,7 @@ import ru.edu.kolyanpie.Hex;
 import ru.edu.kolyanpie.controller.WinChecker;
 import ru.edu.kolyanpie.model.Field;
 import ru.edu.kolyanpie.model.State;
+import ru.edu.kolyanpie.view.menu.PauseMenuTable;
 
 public class LocalGameScreen implements Screen {
     private final Hex hex;
@@ -26,6 +28,17 @@ public class LocalGameScreen implements Screen {
     @Override
     public void show() {
         stage = new Field(this::cellClicked);
+        stage.addListener(new InputListener() {
+            @Override
+            public boolean keyDown(InputEvent event, int keycode) {
+                if (keycode == Input.Keys.MENU || keycode == Input.Keys.BACK || keycode == Input.Keys.ESCAPE) {
+                    pauseGame();
+                    return true;
+                }
+                return false;
+            }
+        });
+        pauseStage = createPauseStage();
         Gdx.input.setInputProcessor(stage);
         blueTurn = true;
         cells = new ArrayList<>(11);
@@ -35,14 +48,20 @@ public class LocalGameScreen implements Screen {
                 cells.get(i).add(State.EMPTY);
             }
         }
+        isPause = false;
     }
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.act(delta);
         stage.draw();
+        if (!isPause) {
+            stage.act(delta);
+        } else {
+            pauseStage.draw();
+            pauseStage.act(delta);
+        }
     }
 
     @Override
@@ -55,6 +74,7 @@ public class LocalGameScreen implements Screen {
         if (Gdx.app.getType().equals(Application.ApplicationType.Android)) {
             Gdx.input.setInputProcessor(null);
             stage.dispose();
+            pauseStage.dispose();
         }
     }
 
@@ -62,19 +82,21 @@ public class LocalGameScreen implements Screen {
     public void resume() {
         if (Gdx.app.getType().equals(Application.ApplicationType.Android)) {
             stage = new Field(this::cellClicked, cells);
+            pauseStage = createPauseStage();
             Gdx.input.setInputProcessor(stage);
         }
         stage.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        pauseGame();
     }
 
     @Override
     public void hide() {
-        Gdx.app.exit();
     }
 
     @Override
     public void dispose() {
         stage.dispose();
+        pauseStage.dispose();
     }
 
     private void cellClicked(int i, int j) {
@@ -90,5 +112,24 @@ public class LocalGameScreen implements Screen {
             cells.get(i).set(j, State.RED);
         }
         blueTurn = !blueTurn;
+    }
+
+    private void pauseGame() {
+        isPause = true;
+        Gdx.input.setInputProcessor(pauseStage);
+    }
+
+    private void resumeGame() {
+        isPause = false;
+        Gdx.input.setInputProcessor(stage);
+    }
+
+    private Stage createPauseStage() {
+        Stage stage = new Stage(this.stage.getViewport());
+        PauseMenuTable table = new PauseMenuTable(new Skin(Gdx.files.internal("ui/skin.json")), hex, this::resumeGame);
+        table.setFillParent(true);
+        stage.addActor(table);
+        stage.setKeyboardFocus(table);
+        return stage;
     }
 }

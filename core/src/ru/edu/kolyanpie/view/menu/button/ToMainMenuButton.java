@@ -18,4 +18,14 @@ public class ToMainMenuButton extends TextButton {
             }
         });
     }
+
+    public ToMainMenuButton(String text, Skin skin, MenuChangeable menuChangeable, String styleName) {
+        super(text, skin, styleName);
+        addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                menuChangeable.changeMenu(new MainMenuTable(skin, menuChangeable));
+            }
+        });
+    }
 }

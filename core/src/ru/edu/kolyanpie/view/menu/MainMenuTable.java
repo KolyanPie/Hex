@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import ru.edu.kolyanpie.Hex;
 import ru.edu.kolyanpie.view.LocalGameScreen;
 import ru.edu.kolyanpie.view.MenuScreen;
 
@@ -23,8 +24,12 @@ public class MainMenuTable extends Table {
 
     public MainMenuTable(Skin skin, MenuChangeable menuChangeable) {
         super(skin);
-        menuScreen = (MenuScreen) menuChangeable;
         this.skin = getSkin();
+        if (menuChangeable.getClass().equals(Hex.class)) {
+            menuScreen = null;
+            return;
+        }
+        menuScreen = (MenuScreen) menuChangeable;
         initialize();
         center();
         add(localButton);
