@@ -14,6 +14,7 @@ import ru.edu.kolyanpie.controller.WinChecker;
 import ru.edu.kolyanpie.model.Field;
 import ru.edu.kolyanpie.model.State;
 import ru.edu.kolyanpie.view.menu.PauseMenuTable;
+import ru.edu.kolyanpie.view.menu.WinMenuTable;
 
 public class LocalGameScreen implements Screen {
     private final Hex hex;
@@ -112,6 +113,10 @@ public class LocalGameScreen implements Screen {
             cells.get(i).set(j, State.RED);
         }
         blueTurn = !blueTurn;
+        if (WinChecker.checkWin(cells, i, j)) {
+            pauseStage = createWinStage(cells.get(i).get(j));
+            pauseGame();
+        }
     }
 
     private void pauseGame() {
@@ -127,6 +132,15 @@ public class LocalGameScreen implements Screen {
     private Stage createPauseStage() {
         Stage stage = new Stage(this.stage.getViewport());
         PauseMenuTable table = new PauseMenuTable(new Skin(Gdx.files.internal("ui/skin.json")), hex, this::resumeGame);
+        table.setFillParent(true);
+        stage.addActor(table);
+        stage.setKeyboardFocus(table);
+        return stage;
+    }
+
+    private Stage createWinStage(State state) {
+        Stage stage = new Stage(this.stage.getViewport());
+        WinMenuTable table = new WinMenuTable(new Skin(Gdx.files.internal("ui/skin.json")), hex, true, state.equals(State.BLUE));
         table.setFillParent(true);
         stage.addActor(table);
         stage.setKeyboardFocus(table);
