@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import ru.edu.kolyanpie.Hex;
-import ru.edu.kolyanpie.view.LocalGameScreen;
+import ru.edu.kolyanpie.view.screen.LocalGameScreen;
 import ru.edu.kolyanpie.view.MenuScreen;
 
 public class MainMenuTable extends Table {

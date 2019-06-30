@@ -1,10 +1,14 @@
-package ru.edu.kolyanpie.view;
+package ru.edu.kolyanpie.view.screen;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +23,10 @@ import ru.edu.kolyanpie.view.menu.WinMenuTable;
 public class LocalGameScreen implements Screen {
     private final Hex hex;
     private Field stage;
+    private Stage pauseStage;
     private List<List<State>> cells;
     private boolean blueTurn;
+    private boolean isPause;
 
     public LocalGameScreen(Hex hex) {
         this.hex = hex;
