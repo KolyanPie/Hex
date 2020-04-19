@@ -1,0 +1,72 @@
+{
+  BitmapFont: {
+    hex-font: {
+      file: hex_font.fnt
+      scaledSize: 32
+    }
+  }
+  Color: {
+    white: { a: 1.0, b: 1.0, g: 1.0, r: 1.0 }
+    blue: { a: 1.0, b: 1.0, g: 0.0, r: 0.0 }
+    red: { a: 1.0, b: 0.0, g: 0.0, r: 1.0 }
+    lightblue: { a: 1.0, b: 1.0, g: 0.78, r: 0.235 }
+    yellow: { a: 1.0, b: 0, g: 1.0, r: 1.0 }
+    darkYellow: { a: 1.0, b: 0, g: 0.5, r: 0.5 }
+  }
+  LabelStyle: {
+    default: {
+      font: hex-font
+      fontColor: blue
+    }
+    blue: {
+      font: hex-font
+      fontColor: blue
+    }
+    red: {
+      font: hex-font
+      fontColor: red
+    }
+    pause: {
+      font: hex-font
+      fontColor: yellow
+    }
+  }
+  TextButtonStyle: {
+    default: {
+      font: hex-font
+      fontColor: blue
+      overFontColor: lightblue
+      downFontColor: white
+    }
+    link: {
+      font: hex-font
+      fontColor: blue
+      overFontColor: lightblue
+      downFontColor: white
+    }
+    pause: {
+      font: hex-font
+      fontColor: yellow
+      overFontColor: darkYellow
+      downFontColor: white
+    }
+  }
+  TintedDrawable: {
+    cursorBlue: {
+      color: blue
+      name: cursor
+    }
+    selectForBlue: {
+      color: lightblue
+      name: full
+    }
+  }
+  TextFieldStyle: {
+    default: {
+      font: hex-font
+      fontColor: blue
+      cursor: cursorBlue
+      selection: selectForBlue
+    }
+  }
+}
