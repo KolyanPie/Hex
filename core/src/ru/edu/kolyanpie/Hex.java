@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import ru.edu.kolyanpie.view.ui.MenuScreen;
 
 public class Hex extends Game {
+    private MenuScreen menuScreen;
 
     @Override
     public void create() {
@@ -17,7 +18,8 @@ public class Hex extends Game {
         }
         Vars.game = this;
         Vars.skin = new Skin(Gdx.files.internal("ui/skin.json"));
-        setScreen(new MenuScreen(Vars.skin));
+        menuScreen = new MenuScreen(Vars.skin);
+        setScreen(menuScreen);
     }
 
     @Override
@@ -30,5 +32,9 @@ public class Hex extends Game {
     public void resume() {
         super.resume();
         Vars.skin.load(Gdx.files.internal("ui/skin.json"));
+    }
+
+    public MenuScreen getMenuScreen() {
+        return menuScreen;
     }
 }

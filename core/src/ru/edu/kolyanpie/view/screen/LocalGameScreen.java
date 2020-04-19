@@ -5,32 +5,28 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.Align;
+import net.ddns.ktgd.menu.Menu;
+import net.ddns.ktgd.menu.MenuStage;
+import ru.edu.kolyanpie.Vars;
+import ru.edu.kolyanpie.controller.WinChecker;
+import ru.edu.kolyanpie.model.Field;
+import ru.edu.kolyanpie.model.State;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.edu.kolyanpie.Hex;
-import ru.edu.kolyanpie.controller.WinChecker;
-import ru.edu.kolyanpie.model.Field;
-import ru.edu.kolyanpie.model.State;
-import ru.edu.kolyanpie.view.menu.PauseMenuTable;
-import ru.edu.kolyanpie.view.menu.WinMenuTable;
-
 public class LocalGameScreen implements Screen {
-    private final Hex hex;
     private Field stage;
-    private Stage pauseStage;
+    private MenuStage pauseStage;
     private List<List<State>> cells;
     private boolean blueTurn;
     private boolean isPause;
-
-    public LocalGameScreen(Hex hex) {
-        this.hex = hex;
-    }
 
     @Override
     public void show() {
@@ -73,11 +69,13 @@ public class LocalGameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        pauseStage.resize(width, height);
         stage.resize(width, height);
     }
 
     @Override
     public void pause() {
+        pauseGame();
         if (Gdx.app.getType().equals(Application.ApplicationType.Android)) {
             Gdx.input.setInputProcessor(null);
             stage.dispose();
@@ -93,7 +91,6 @@ public class LocalGameScreen implements Screen {
             Gdx.input.setInputProcessor(stage);
         }
         stage.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        pauseGame();
     }
 
     @Override
@@ -127,7 +124,7 @@ public class LocalGameScreen implements Screen {
 
     private void pauseGame() {
         isPause = true;
-        Gdx.input.setInputProcessor(pauseStage);
+        pauseStage.show();
     }
 
     private void resumeGame() {
@@ -135,21 +132,49 @@ public class LocalGameScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
     }
 
-    private Stage createPauseStage() {
-        Stage stage = new Stage(this.stage.getViewport());
-        PauseMenuTable table = new PauseMenuTable(new Skin(Gdx.files.internal("ui/skin.json")), hex, this::resumeGame);
-        table.setFillParent(true);
-        stage.addActor(table);
-        stage.setKeyboardFocus(table);
-        return stage;
+    private MenuStage createPauseStage() {
+        Actor pauseLabel;
+        Actor continueButton;
+        Actor backToMenuButton;
+
+        pauseLabel = new Label("PAUSE", Vars.skin, "pause") {{
+            setAlignment(Align.center);
+        }};
+        continueButton = Menu.getClickedActor(
+                new TextButton("CONTINUE", Vars.skin, "pause"),
+                event -> resumeGame()
+        );
+        backToMenuButton = Menu.getClickedActor(
+                new TextButton("BACK TO MENU", Vars.skin, "pause"),
+                event -> Vars.game.setScreen(Vars.game.getMenuScreen())
+        );
+        return createResumableMenuStage(pauseLabel, continueButton, backToMenuButton);
     }
 
-    private Stage createWinStage(State state) {
-        Stage stage = new Stage(this.stage.getViewport());
-        WinMenuTable table = new WinMenuTable(new Skin(Gdx.files.internal("ui/skin.json")), hex, true, state.equals(State.BLUE));
-        table.setFillParent(true);
-        stage.addActor(table);
-        stage.setKeyboardFocus(table);
+    private MenuStage createWinStage(State state) {
+        Label winnerLabel;
+        Actor backToMenuButton;
+
+        winnerLabel = new Label("YOU WIN", Vars.skin, state.equals(State.BLUE) ? "blue" : "red") {{
+            setAlignment(Align.center);
+        }};
+        backToMenuButton = Menu.getClickedActor(
+                new TextButton("BACK TO MENU", Vars.skin, "pause"),
+                event -> Vars.game.setScreen(Vars.game.getMenuScreen())
+        );
+        return createResumableMenuStage(winnerLabel, backToMenuButton);
+    }
+
+    private MenuStage createResumableMenuStage(Actor... actors) {
+        MenuStage stage = new MenuStage(actors);
+
+        stage.addKeyDownListener(keycode -> {
+            if (keycode == Input.Keys.MENU || keycode == Input.Keys.BACK || keycode == Input.Keys.ESCAPE) {
+                resumeGame();
+                return true;
+            }
+            return false;
+        });
         return stage;
     }
 }
