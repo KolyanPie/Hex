@@ -70,5 +70,7 @@ project(":core") {
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
 
+        //gdx-menu lib https://github.com/KolyanPie/gdx-menu/tree/v0.1
+        api "net.ddns.ktgd:gdx-menu:0.1"
     }
 }
