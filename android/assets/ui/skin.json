@@ -1,0 +1,72 @@
+{
+  com.badlogic.gdx.graphics.g2d.BitmapFont: {
+    hex-font: {
+      file: hex_font.fnt
+      scaledSize: 32
+    }
+  }
+  com.badlogic.gdx.graphics.Color: {
+    white: { a: 1.0, b: 1.0, g: 1.0, r: 1.0 }
+    blue: { a: 1.0, b: 1.0, g: 0.0, r: 0.0 }
+    red: { a: 1.0, b: 0.0, g: 0.0, r: 1.0 }
+    lightblue: { a: 1.0, b: 1.0, g: 0.78, r: 0.235 }
+    black: { a: 1.0, b: 0, g: 0, r: 0 }
+    gray: { a: 1.0, b: 0.5, g: 0.5, r: 0.5 }
+  }
+  com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+    default: {
+      font: hex-font
+      fontColor: blue
+    }
+    blue: {
+      font: hex-font
+      fontColor: blue
+    }
+    red: {
+      font: hex-font
+      fontColor: red
+    }
+    back: {
+      font: hex-font
+      fontColor: black
+    }
+  }
+  com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+    default: {
+      font: hex-font
+      fontColor: blue
+      overFontColor: lightblue
+      downFontColor: white
+    }
+    link: {
+      font: hex-font
+      fontColor: blue
+      overFontColor: lightblue
+      downFontColor: white
+    }
+    back: {
+      font: hex-font
+      fontColor: black
+      overFontColor: gray
+      downFontColor: white
+    }
+  }
+  com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
+    cursorBlue: {
+      color: blue
+      name: cursor
+    }
+    selectForBlue: {
+      color: lightblue
+      name: full
+    }
+  }
+  com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
+    default: {
+      font: hex-font
+      fontColor: blue
+      cursor: cursorBlue
+      selection: selectForBlue
+    }
+  }
+}
