@@ -78,6 +78,13 @@ public class MenuScreen extends Menu {
 
     @Override
     public void hide() {
-
+        MAIN_MENU.dispose();
+        MAIN_MENU = null;
+        LAN_MENU.dispose();
+        LAN_MENU = null;
+        NET_MENU.dispose();
+        NET_MENU = null;
+        ABOUT_MENU.dispose();
+        ABOUT_MENU = null;
     }
 }
