@@ -10,8 +10,8 @@
     blue: { a: 1.0, b: 1.0, g: 0.0, r: 0.0 }
     red: { a: 1.0, b: 0.0, g: 0.0, r: 1.0 }
     lightblue: { a: 1.0, b: 1.0, g: 0.78, r: 0.235 }
-    black: { a: 1.0, b: 0, g: 0, r: 0 }
-    gray: { a: 1.0, b: 0.5, g: 0.5, r: 0.5 }
+    yellow: { a: 1.0, b: 0, g: 1.0, r: 1.0 }
+    darkYellow: { a: 1.0, b: 0, g: 0.5, r: 0.5 }
   }
   LabelStyle: {
     default: {
@@ -26,9 +26,9 @@
       font: hex-font
       fontColor: red
     }
-    black: {
+    pause: {
       font: hex-font
-      fontColor: black
+      fontColor: yellow
     }
   }
   TextButtonStyle: {
@@ -44,10 +44,10 @@
       overFontColor: lightblue
       downFontColor: white
     }
-    back: {
+    pause: {
       font: hex-font
-      fontColor: black
-      overFontColor: gray
+      fontColor: yellow
+      overFontColor: darkYellow
       downFontColor: white
     }
   }
