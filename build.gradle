@@ -74,3 +74,7 @@ project(":core") {
         api "net.ddns.ktgd:gdx-menu:0.1"
     }
 }
+
+project(":server") {
+    apply plugin: "java-library"
+}
