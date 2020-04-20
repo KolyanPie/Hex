@@ -17,6 +17,7 @@ import ru.edu.kolyanpie.Vars;
 import ru.edu.kolyanpie.controller.WinChecker;
 import ru.edu.kolyanpie.model.Field;
 import ru.edu.kolyanpie.model.State;
+import ru.edu.kolyanpie.view.ui.MenuScreen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -146,7 +147,7 @@ public class LocalGameScreen implements Screen {
         );
         backToMenuButton = Menu.getClickedActor(
                 new TextButton("BACK TO MENU", Vars.skin, "pause"),
-                event -> Vars.game.setScreen(Vars.game.getMenuScreen())
+                event -> Vars.game.setScreen(Vars.game.getScreen(MenuScreen.class))
         );
         return createResumableMenuStage(pauseLabel, continueButton, backToMenuButton);
     }
@@ -160,7 +161,7 @@ public class LocalGameScreen implements Screen {
         }};
         backToMenuButton = Menu.getClickedActor(
                 new TextButton("BACK TO MENU", Vars.skin, "pause"),
-                event -> Vars.game.setScreen(Vars.game.getMenuScreen())
+                event -> Vars.game.setScreen(Vars.game.getScreen(MenuScreen.class))
         );
         return createResumableMenuStage(winnerLabel, backToMenuButton);
     }

@@ -1,14 +1,14 @@
 package ru.edu.kolyanpie;
 
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import ru.edu.kolyanpie.view.screen.LocalGameScreen;
 import ru.edu.kolyanpie.view.ui.MenuScreen;
 
+import java.util.HashMap;
+
 public class Hex extends Game {
-    private MenuScreen menuScreen;
+    private HashMap<Class<? extends Screen>, Screen> screens;
 
     @Override
     public void create() {
@@ -18,8 +18,8 @@ public class Hex extends Game {
         }
         Vars.game = this;
         Vars.skin = new Skin(Gdx.files.internal("ui/skin.json"));
-        menuScreen = new MenuScreen(Vars.skin);
-        setScreen(menuScreen);
+        screens = screensInit();
+        setScreen(getScreen(MenuScreen.class));
     }
 
     @Override
@@ -34,7 +34,15 @@ public class Hex extends Game {
         Vars.skin.load(Gdx.files.internal("ui/skin.json"));
     }
 
-    public MenuScreen getMenuScreen() {
-        return menuScreen;
+    public Screen getScreen(Class<? extends Screen> clz) {
+        return screens.get(clz);
+    }
+
+    private HashMap<Class<? extends Screen>, Screen> screensInit() {
+        HashMap<Class<? extends Screen>, Screen> result = new HashMap<>();
+
+        result.put(MenuScreen.class, new MenuScreen(Vars.skin));
+        result.put(LocalGameScreen.class, new LocalGameScreen());
+        return result;
     }
 }
