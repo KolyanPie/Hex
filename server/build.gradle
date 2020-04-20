@@ -42,6 +42,6 @@ dependencies {
     implementation 'org.springframework.security:spring-security-test'
     implementation 'org.springframework.session:spring-session-jdbc'
     //database support
-    api('org.springframework.boot:spring-boot-starter-data-jpa')
-    api('org.postgresql:postgresql')
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+    implementation('org.postgresql:postgresql')
 }
