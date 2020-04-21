@@ -13,6 +13,8 @@
     green: { a: 1, b: 0, g: 1, r: 0 },
     red: { a: 1, b: 0, g: 0, r: 1 },
     blue: { a: 1, b: 1, g: 0, r: 0 },
+    yellow: { a: 1, b: 0, g: 1, r: 1 },
+    dark-yellow: { a: 1, b: 0, g: 0.5, r: 0.5 },
     grey: { a: 1, b: 0.32, g: 0.32, r: 0.32 },
     vis-blue: { a: 1, b: 0.886, g: 0.631, r: 0.105 },
     vis-red: { a: 1, b: 0.047, g: 0, r: 0.862 },
@@ -55,6 +57,13 @@
       fontColor: white,
       downFontColor: blue,
       overFontColor: link-label,
+      disabledFontColor: grey
+    },
+    yellow: {
+      font: default-font,
+      fontColor: yellow,
+      downFontColor: white,
+      overFontColor: dark-yellow,
       disabledFontColor: grey
     },
     blue: {
@@ -215,9 +224,9 @@
       font: default-font,
       fontColor: white
     },
-    black: {
+    yellow: {
       font: default-font,
-      fontColor: black,
+      fontColor: yellow,
     },
     blue: {
       font: default-font,

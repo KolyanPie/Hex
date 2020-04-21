@@ -138,15 +138,15 @@ public class LocalGameScreen implements Screen {
         Actor continueButton;
         Actor backToMenuButton;
 
-        pauseLabel = new Label("PAUSE", Vars.skin, "black") {{
+        pauseLabel = new Label("PAUSE", Vars.skin, "yellow") {{
             setAlignment(Align.center);
         }};
         continueButton = Menu.getClickedActor(
-                new TextButton("CONTINUE", Vars.skin, "black"),
+                new TextButton("CONTINUE", Vars.skin, "yellow"),
                 event -> resumeGame()
         );
         backToMenuButton = Menu.getClickedActor(
-                new TextButton("BACK TO MENU", Vars.skin, "black"),
+                new TextButton("BACK TO MENU", Vars.skin, "yellow"),
                 event -> Vars.game.setScreen(Vars.game.getScreen(MenuScreen.class))
         );
         return createResumableMenuStage(pauseLabel, continueButton, backToMenuButton);
@@ -160,7 +160,7 @@ public class LocalGameScreen implements Screen {
             setAlignment(Align.center);
         }};
         backToMenuButton = Menu.getClickedActor(
-                new TextButton("BACK TO MENU", Vars.skin, "black"),
+                new TextButton("BACK TO MENU", Vars.skin, "yellow"),
                 event -> Vars.game.setScreen(Vars.game.getScreen(MenuScreen.class))
         );
         return createResumableMenuStage(winnerLabel, backToMenuButton);
