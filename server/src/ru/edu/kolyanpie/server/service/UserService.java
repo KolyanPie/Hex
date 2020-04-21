@@ -35,12 +35,17 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean addUser(User user) {
-        User userFromDb = userRepo.findByUsername(user.getUsername());
-        if (userFromDb != null) {
+        if (existUserByUsername(user.getUsername())) {
             return false;
         }
-
+        //TODO: add some checking
         userRepo.save(user);
         return true;
+    }
+
+    public boolean existUserByUsername(String username) {
+        User userFromDb = userRepo.findByUsername(username);
+
+        return userFromDb != null;
     }
 }
