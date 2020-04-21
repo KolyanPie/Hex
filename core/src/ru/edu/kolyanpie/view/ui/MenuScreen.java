@@ -22,9 +22,6 @@ public final class MenuScreen extends Menu {
     //Lan menu
     private final Actor LAN_NOT_AVAILABLE_LABEL;
     private final Actor LAN_BACK_TO_MAIN_MENU_BUTTON;
-    //Net menu
-    private final Actor NET_NOT_AVAILABLE_LABEL;
-    private final Actor NET_BACK_TO_MAIN_MENU_BUTTON;
     //About menu
     private final Actor WIKI_URL_BUTTON;
     private final Actor GITHUB_URL_BUTTON;
@@ -34,7 +31,6 @@ public final class MenuScreen extends Menu {
     //region menus
     private MenuStage MAIN_MENU;
     private MenuStage LAN_MENU;
-    private MenuStage NET_MENU;
     private MenuStage ABOUT_MENU;
     //endregion
 
@@ -51,7 +47,10 @@ public final class MenuScreen extends Menu {
                 event -> Vars.game.setScreen(LocalGameScreen.getInstance())
         );
         LAN_MENU_BUTTON = getClickedActor(new TextButton("LAN", uiSkin), event -> changeMenu(LAN_MENU));
-        NET_MENU_BUTTON = getClickedActor(new TextButton("NET", uiSkin), event -> changeMenu(NET_MENU));
+        NET_MENU_BUTTON = getClickedActor(
+                new TextButton("NET", uiSkin),
+                event -> Vars.game.setScreen(NetMenuScreen.getInstance())
+        );
         ABOUT_MENU_BUTTON = getClickedActor(new TextButton("ABOUT", uiSkin), event -> changeMenu(ABOUT_MENU));
         QUIT_BUTTON = getClickedActor(new TextButton("QUIT", uiSkin), event -> Gdx.app.exit());
         //endregion
@@ -60,9 +59,6 @@ public final class MenuScreen extends Menu {
         //Lan menu
         LAN_NOT_AVAILABLE_LABEL = new Label("NOT AVAILABLE YET", uiSkin);
         LAN_BACK_TO_MAIN_MENU_BUTTON = getClickedActor(new TextButton("BACK", uiSkin), event -> changeMenu(MAIN_MENU));
-        //Net menu
-        NET_NOT_AVAILABLE_LABEL = new Label("NOT AVAILABLE YET", uiSkin);
-        NET_BACK_TO_MAIN_MENU_BUTTON = getClickedActor(new TextButton("BACK", uiSkin), event -> changeMenu(MAIN_MENU));
         //endregion
 
         //region about menu
@@ -85,7 +81,6 @@ public final class MenuScreen extends Menu {
     public void show() {
         MAIN_MENU = new MenuStage(LOCAL_MENU_BUTTON, LAN_MENU_BUTTON, NET_MENU_BUTTON, ABOUT_MENU_BUTTON, QUIT_BUTTON);
         LAN_MENU = new MenuStage(LAN_NOT_AVAILABLE_LABEL, LAN_BACK_TO_MAIN_MENU_BUTTON);
-        NET_MENU = new MenuStage(NET_NOT_AVAILABLE_LABEL, NET_BACK_TO_MAIN_MENU_BUTTON);
         ABOUT_MENU = new MenuStage(WIKI_URL_BUTTON, GITHUB_URL_BUTTON, ABOUT_BACK_TO_MAIN_MENU_BUTTON);
         changeMenu(MAIN_MENU);
     }
@@ -96,8 +91,6 @@ public final class MenuScreen extends Menu {
         MAIN_MENU = null;
         LAN_MENU.dispose();
         LAN_MENU = null;
-        NET_MENU.dispose();
-        NET_MENU = null;
         ABOUT_MENU.dispose();
         ABOUT_MENU = null;
     }
