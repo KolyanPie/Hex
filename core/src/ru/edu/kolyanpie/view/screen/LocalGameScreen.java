@@ -23,11 +23,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LocalGameScreen implements Screen {
+    private static final LocalGameScreen instance = new LocalGameScreen();
+
     private Field stage;
     private MenuStage pauseStage;
     private List<List<State>> cells;
     private boolean blueTurn;
     private boolean isPause;
+
+    public static LocalGameScreen getInstance() {
+        return instance;
+    }
+
+    private LocalGameScreen() {}
 
     @Override
     public void show() {
@@ -147,7 +155,7 @@ public class LocalGameScreen implements Screen {
         );
         backToMenuButton = Menu.getClickedActor(
                 new TextButton("BACK TO MENU", Vars.skin, "yellow"),
-                event -> Vars.game.setScreen(Vars.game.getScreen(MenuScreen.class))
+                event -> Vars.game.setScreen(MenuScreen.getInstance())
         );
         return createResumableMenuStage(pauseLabel, continueButton, backToMenuButton);
     }
@@ -161,7 +169,7 @@ public class LocalGameScreen implements Screen {
         }};
         backToMenuButton = Menu.getClickedActor(
                 new TextButton("BACK TO MENU", Vars.skin, "yellow"),
-                event -> Vars.game.setScreen(Vars.game.getScreen(MenuScreen.class))
+                event -> Vars.game.setScreen(MenuScreen.getInstance())
         );
         return createResumableMenuStage(winnerLabel, backToMenuButton);
     }

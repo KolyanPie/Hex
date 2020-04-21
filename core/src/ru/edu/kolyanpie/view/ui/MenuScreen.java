@@ -48,7 +48,7 @@ public final class MenuScreen extends Menu {
         //region main menu
         LOCAL_MENU_BUTTON = getClickedActor(
                 new TextButton("LOCAL", uiSkin),
-                event -> Vars.game.setScreen(new LocalGameScreen())
+                event -> Vars.game.setScreen(LocalGameScreen.getInstance())
         );
         LAN_MENU_BUTTON = getClickedActor(new TextButton("LAN", uiSkin), event -> changeMenu(LAN_MENU));
         NET_MENU_BUTTON = getClickedActor(new TextButton("NET", uiSkin), event -> changeMenu(NET_MENU));
