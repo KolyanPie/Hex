@@ -17,7 +17,7 @@ public class Hex extends Game {
             Gdx.input.setCatchKey(Input.Keys.MENU, true);
         }
         Vars.game = this;
-        Vars.skin = new Skin(Gdx.files.internal("ui/skin.json"));
+        Vars.skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         screens = screensInit();
         setScreen(getScreen(MenuScreen.class));
     }
@@ -31,7 +31,7 @@ public class Hex extends Game {
     @Override
     public void resume() {
         super.resume();
-        Vars.skin.load(Gdx.files.internal("ui/skin.json"));
+        Vars.skin.load(Gdx.files.internal("skin/uiskin.json"));
     }
 
     public Screen getScreen(Class<? extends Screen> clz) {
