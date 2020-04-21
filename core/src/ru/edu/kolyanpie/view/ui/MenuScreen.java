@@ -3,14 +3,14 @@ package ru.edu.kolyanpie.view.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import net.ddns.ktgd.menu.Menu;
 import net.ddns.ktgd.menu.MenuStage;
 import ru.edu.kolyanpie.Vars;
 import ru.edu.kolyanpie.view.screen.LocalGameScreen;
 
-public class MenuScreen extends Menu {
+public final class MenuScreen extends Menu {
+    private static final MenuScreen instance = new MenuScreen();
 
     //region menu's items
     //Main menu
@@ -38,9 +38,14 @@ public class MenuScreen extends Menu {
     private MenuStage ABOUT_MENU;
     //endregion
 
-    public MenuScreen(Skin menuSkin) {
-        super(menuSkin);
-        //Main menu
+    public static MenuScreen getInstance() {
+        return instance;
+    }
+
+    private MenuScreen() {
+        super(Vars.skin);
+
+        //region main menu
         LOCAL_MENU_BUTTON = getClickedActor(
                 new TextButton("LOCAL", uiSkin),
                 event -> Vars.game.setScreen(new LocalGameScreen())
@@ -49,13 +54,18 @@ public class MenuScreen extends Menu {
         NET_MENU_BUTTON = getClickedActor(new TextButton("NET", uiSkin), event -> changeMenu(NET_MENU));
         ABOUT_MENU_BUTTON = getClickedActor(new TextButton("ABOUT", uiSkin), event -> changeMenu(ABOUT_MENU));
         QUIT_BUTTON = getClickedActor(new TextButton("QUIT", uiSkin), event -> Gdx.app.exit());
+        //endregion
+
+        //region nay menus
         //Lan menu
         LAN_NOT_AVAILABLE_LABEL = new Label("NOT AVAILABLE YET", uiSkin);
         LAN_BACK_TO_MAIN_MENU_BUTTON = getClickedActor(new TextButton("BACK", uiSkin), event -> changeMenu(MAIN_MENU));
         //Net menu
         NET_NOT_AVAILABLE_LABEL = new Label("NOT AVAILABLE YET", uiSkin);
         NET_BACK_TO_MAIN_MENU_BUTTON = getClickedActor(new TextButton("BACK", uiSkin), event -> changeMenu(MAIN_MENU));
-        //About menu
+        //endregion
+
+        //region about menu
         WIKI_URL_BUTTON = getClickedActor(
                 new TextButton("->WIKI", uiSkin, "link"),
                 event -> Gdx.net.openURI("https://en.wikipedia.org/wiki/Hex_(board_game)")
@@ -64,7 +74,11 @@ public class MenuScreen extends Menu {
                 new TextButton("->GITHUB", uiSkin, "link"),
                 event -> Gdx.net.openURI("https://en.wikipedia.org/wiki/Hex_(board_game)")
         );
-        ABOUT_BACK_TO_MAIN_MENU_BUTTON = getClickedActor(new TextButton("BACK", uiSkin), event -> changeMenu(MAIN_MENU));
+        ABOUT_BACK_TO_MAIN_MENU_BUTTON = getClickedActor(
+                new TextButton("BACK", uiSkin),
+                event -> changeMenu(MAIN_MENU)
+        );
+        //endregion
     }
 
     @Override
