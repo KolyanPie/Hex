@@ -28,9 +28,9 @@ public final class NetMenuScreen extends Menu {
     //Registration menu
     private final Label REGISTRATION_NAME_LABEL;
     private final TextField REGISTRATION_NAME_FIELD;
-    private final Actor REGISTRATION_PASS_LABEL;
+    private final Label REGISTRATION_PASS_LABEL;
     private final TextField REGISTRATION_PASS_FIELD;
-    private final Actor REGISTRATION_CONFIRM_PASS_LABEL;
+    private final Label REGISTRATION_CONFIRM_PASS_LABEL;
     private final TextField REGISTRATION_CONFIRM_PASS_FIELD;
     private final Actor REGISTRATION_CONTINUE_BUTTON;
     private final Actor REGISTRATION_CANCEL_BUTTON;
@@ -90,19 +90,10 @@ public final class NetMenuScreen extends Menu {
                                 public void handleHttpResponse(Net.HttpResponse httpResponse) {
                                     switch (httpResponse.getResultAsString()) {
                                         case "true":
-                                            REGISTRATION_NAME_LABEL.setStyle(uiSkin.get(
-                                                    "green",
-                                                    Label.LabelStyle.class
-                                            ));
-                                            REGISTRATION_NAME_LABEL.setText("NAME IS AVAILABLE");
+                                            setStyleAndText(REGISTRATION_NAME_LABEL, "green", "NAME IS AVAILABLE");
                                             break;
-
                                         case "false":
-                                            REGISTRATION_NAME_LABEL.setStyle(uiSkin.get(
-                                                    "red",
-                                                    Label.LabelStyle.class
-                                            ));
-                                            REGISTRATION_NAME_LABEL.setText("IS NOT AVAILABLE");
+                                            setStyleAndText(REGISTRATION_NAME_LABEL, "red", "IS NOT AVAILABLE");
                                     }
                                 }
 
@@ -122,11 +113,42 @@ public final class NetMenuScreen extends Menu {
         REGISTRATION_PASS_LABEL = new Label("WRITE PASSWORD", uiSkin) {{
             setAlignment(Align.center);
         }};
-        REGISTRATION_PASS_FIELD = new TextField("", uiSkin);
+        REGISTRATION_PASS_FIELD = new TextField("", uiSkin) {{
+            setPasswordCharacter('*');
+            setPasswordMode(true);
+            addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    if (isPassAvailable()) {
+                        setStyleAndText(REGISTRATION_PASS_LABEL, "green", "PASS IS AVAILABLE");
+                    } else {
+                        setStyleAndText(REGISTRATION_PASS_LABEL, "red", "LENGTH MUST BE > 7");
+                    }
+                    if (isPassEquals()) {
+                        setStyleAndText(REGISTRATION_CONFIRM_PASS_LABEL, "green", "EQUALS");
+                    } else {
+                        setStyleAndText(REGISTRATION_CONFIRM_PASS_LABEL, "red", "NOT EQUALS");
+                    }
+                }
+            });
+        }};
         REGISTRATION_CONFIRM_PASS_LABEL = new Label("CONFIRM PASSWORD", uiSkin) {{
             setAlignment(Align.center);
         }};
-        REGISTRATION_CONFIRM_PASS_FIELD = new TextField("", uiSkin);
+        REGISTRATION_CONFIRM_PASS_FIELD = new TextField("", uiSkin) {{
+            setPasswordCharacter('*');
+            setPasswordMode(true);
+            addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    if (isPassEquals()) {
+                        setStyleAndText(REGISTRATION_CONFIRM_PASS_LABEL, "green", "EQUALS");
+                    } else {
+                        setStyleAndText(REGISTRATION_CONFIRM_PASS_LABEL, "red", "NOT EQUALS");
+                    }
+                }
+            });
+        }};
         REGISTRATION_CONTINUE_BUTTON = getClickedActor(new TextButton("CONTINUE", uiSkin), event -> {
             String name = REGISTRATION_NAME_FIELD.getText();
             String pass = REGISTRATION_PASS_FIELD.getText();
@@ -154,7 +176,6 @@ public final class NetMenuScreen extends Menu {
                         public void cancelled() {}
                     }
             );
-            //TODO: check alert + registration request
         });
         REGISTRATION_CANCEL_BUTTON = getClickedActor(
                 new TextButton("CANCEL", uiSkin),
@@ -193,5 +214,21 @@ public final class NetMenuScreen extends Menu {
         LOGIN_NET_MENU = null;
         REGISTRATION_NET_MENU.dispose();
         REGISTRATION_NET_MENU = null;
+    }
+
+    private boolean isPassAvailable() {
+        return REGISTRATION_PASS_FIELD.getText().length() > 7;
+    }
+
+    private boolean isPassEquals() {
+        return REGISTRATION_CONFIRM_PASS_FIELD.getText().equals(REGISTRATION_PASS_FIELD.getText());
+    }
+
+    private void setStyleAndText(Label label, String style, String text) {
+        label.setStyle(uiSkin.get(
+                style,
+                Label.LabelStyle.class
+        ));
+        label.setText(text);
     }
 }
