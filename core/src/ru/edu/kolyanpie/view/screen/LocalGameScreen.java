@@ -22,7 +22,7 @@ import ru.edu.kolyanpie.view.ui.MenuScreen;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LocalGameScreen implements Screen {
+public final class LocalGameScreen implements Screen {
     private static final LocalGameScreen instance = new LocalGameScreen();
 
     private Field stage;

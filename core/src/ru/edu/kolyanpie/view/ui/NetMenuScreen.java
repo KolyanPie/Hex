@@ -9,7 +9,7 @@ import net.ddns.ktgd.menu.Menu;
 import net.ddns.ktgd.menu.MenuStage;
 import ru.edu.kolyanpie.Vars;
 
-public class NetMenuScreen extends Menu {
+public final class NetMenuScreen extends Menu {
     private static final NetMenuScreen instance = new NetMenuScreen();
 
     //region menu's items

@@ -7,7 +7,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import ru.edu.kolyanpie.view.ui.MenuScreen;
 
-public class Hex extends Game {
+public final class Hex extends Game {
 
     @Override
     public void create() {
