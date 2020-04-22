@@ -1,5 +1,6 @@
 package ru.edu.kolyanpie.view.ui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -127,6 +128,32 @@ public final class NetMenuScreen extends Menu {
         }};
         REGISTRATION_CONFIRM_PASS_FIELD = new TextField("", uiSkin);
         REGISTRATION_CONTINUE_BUTTON = getClickedActor(new TextButton("CONTINUE", uiSkin), event -> {
+            String name = REGISTRATION_NAME_FIELD.getText();
+            String pass = REGISTRATION_PASS_FIELD.getText();
+            NetController.sendJson(
+                    "/registration",
+                    String.format(
+                            "{\"username\":\"%s\", \"password\":\"%s\"}",
+                            name,
+                            pass
+                    ),
+                    new Net.HttpResponseListener() {
+                        @Override
+                        public void handleHttpResponse(Net.HttpResponse httpResponse) {
+                            if (httpResponse.getResultAsString().equals("true")) {
+                                LOGIN_NAME_FIELD.setText(name);
+                                LOGIN_PASS_FIELD.setText(pass);
+                                Gdx.app.postRunnable(() -> changeMenu(LOGIN_NET_MENU));
+                            }
+                        }
+
+                        @Override
+                        public void failed(Throwable t) {}
+
+                        @Override
+                        public void cancelled() {}
+                    }
+            );
             //TODO: check alert + registration request
         });
         REGISTRATION_CANCEL_BUTTON = getClickedActor(
