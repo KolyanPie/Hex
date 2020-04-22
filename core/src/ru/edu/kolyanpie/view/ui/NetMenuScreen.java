@@ -1,13 +1,16 @@
 package ru.edu.kolyanpie.view.ui;
 
+import com.badlogic.gdx.Net;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import net.ddns.ktgd.menu.Menu;
 import net.ddns.ktgd.menu.MenuStage;
 import ru.edu.kolyanpie.Vars;
+import ru.edu.kolyanpie.controller.NetController;
 
 public final class NetMenuScreen extends Menu {
     private static final NetMenuScreen instance = new NetMenuScreen();
@@ -22,7 +25,7 @@ public final class NetMenuScreen extends Menu {
     private final Actor LOGIN_REGISTRATION_BUTTON;
     private final Actor LOGIN_BACK_TO_MAIN_MENU_BUTTON;
     //Registration menu
-    private final Actor REGISTRATION_NAME_LABEL;
+    private final Label REGISTRATION_NAME_LABEL;
     private final TextField REGISTRATION_NAME_FIELD;
     private final Actor REGISTRATION_PASS_LABEL;
     private final TextField REGISTRATION_PASS_FIELD;
@@ -73,7 +76,48 @@ public final class NetMenuScreen extends Menu {
         REGISTRATION_NAME_LABEL = new Label("WRITE NAME", uiSkin) {{
             setAlignment(Align.center);
         }};
-        REGISTRATION_NAME_FIELD = new TextField("", uiSkin);
+        REGISTRATION_NAME_FIELD = new TextField("", uiSkin) {{
+            addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    String text = REGISTRATION_NAME_FIELD.getText();
+                    NetController.sendGet(
+                            "/username",
+                            "username=" + text.replaceAll(" ", "+"),
+                            new Net.HttpResponseListener() {
+                                @Override
+                                public void handleHttpResponse(Net.HttpResponse httpResponse) {
+                                    switch (httpResponse.getResultAsString()) {
+                                        case "true":
+                                            REGISTRATION_NAME_LABEL.setStyle(uiSkin.get(
+                                                    "green",
+                                                    Label.LabelStyle.class
+                                            ));
+                                            REGISTRATION_NAME_LABEL.setText("NAME IS AVAILABLE");
+                                            break;
+
+                                        case "false":
+                                            REGISTRATION_NAME_LABEL.setStyle(uiSkin.get(
+                                                    "red",
+                                                    Label.LabelStyle.class
+                                            ));
+                                            REGISTRATION_NAME_LABEL.setText("IS NOT AVAILABLE");
+                                    }
+                                }
+
+                                @Override
+                                public void failed(Throwable t) {}
+
+                                @Override
+                                public void cancelled() {}
+                            }
+                    );
+                    setTextFieldFilter(
+                            (textField, c) -> Character.isDigit(c) || c == 32 || (65 <= c && c <= 90) || (97 <= c && c <= 122)
+                    );
+                }
+            });
+        }};
         REGISTRATION_PASS_LABEL = new Label("WRITE PASSWORD", uiSkin) {{
             setAlignment(Align.center);
         }};
