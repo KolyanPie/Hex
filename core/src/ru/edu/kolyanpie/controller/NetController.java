@@ -2,7 +2,6 @@ package ru.edu.kolyanpie.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
-import com.badlogic.gdx.utils.Base64Coder;
 import com.badlogic.gdx.utils.Json;
 
 import static ru.edu.kolyanpie.util.Preferences.AUTHORIZATION;
@@ -28,10 +27,6 @@ public final class NetController {
         jsonRequest.setContent(json);
         jsonRequest.setHeader("Authorization", "Basic " + HEX_PREF.getString(AUTHORIZATION, "Og=="));
         Gdx.net.sendHttpRequest(jsonRequest, listener);
-    }
-
-    public static void updateAuthorization(String name, String pass) {
-        HEX_PREF.put("Authorization", Base64Coder.encodeString(name + ":" + pass));
     }
 
     private NetController() {}
