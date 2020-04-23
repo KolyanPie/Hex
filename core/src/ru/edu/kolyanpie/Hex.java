@@ -17,6 +17,7 @@ public final class Hex extends Game {
         }
         Vars.game = this;
         Vars.skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+        Vars.preferences = Gdx.app.getPreferences("kolyanpie/hex_pref");
         setScreen(MenuScreen.getInstance());
     }
 
