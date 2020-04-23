@@ -19,11 +19,11 @@ public class UserController {
 
     @GetMapping("/username")
     public boolean isUsernameAvailable(@RequestParam String username) {
-        return !userService.existUserByUsername(username);
+        return !userService.isUsernameAvailable(username);
     }
 
     @GetMapping("/login")
-    public boolean isLogin() { 
+    public boolean isLogin() {
         return true;
     }
 

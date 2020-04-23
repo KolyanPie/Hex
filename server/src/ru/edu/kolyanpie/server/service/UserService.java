@@ -38,8 +38,7 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean addUser(User user) {
-        String username = user.getUsername();
-        if (existUserByUsername(username) || !username.trim().equals(username) || username.equals("")) {
+        if (isUsernameAvailable(user.getUsername())) {
             return false;
         }
         String password = user.getPassword();
@@ -51,9 +50,9 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
-    public boolean existUserByUsername(String username) {
+    public boolean isUsernameAvailable(String username) {
         User userFromDb = userRepo.findByUsername(username);
 
-        return userFromDb != null;
+        return userFromDb != null  && username.trim().equals(username) && !username.equals("");
     }
 }
