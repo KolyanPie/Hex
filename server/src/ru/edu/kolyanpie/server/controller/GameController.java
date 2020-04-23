@@ -1,0 +1,28 @@
+package ru.edu.kolyanpie.server.controller;
+
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import ru.edu.kolyanpie.server.model.User;
+import ru.edu.kolyanpie.server.service.GameService;
+
+@RestController
+@RequestMapping("/game")
+public class GameController {
+    private final GameService gameService;
+
+    public GameController(GameService gameService) {
+        this.gameService = gameService;
+    }
+
+    @PostMapping("/blue")
+    public String createGameAsBlue(@AuthenticationPrincipal User user) {
+        return gameService.createGame(user, true);
+    }
+
+    @PostMapping("/red")
+    public String createGameAsRed(@AuthenticationPrincipal User user) {
+        return gameService.createGame(user, false);
+    }
+}
