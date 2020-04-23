@@ -18,7 +18,7 @@ public final class NetMenuScreen extends Menu {
 
     //region menu's items
     //Main net menu
-    private final Actor LOGIN_NAME_LABEL;
+    private final Label LOGIN_NAME_LABEL;
     private final TextField LOGIN_NAME_FIELD;
     private final Actor LOGIN_PASS_LABEL;
     private final TextField LOGIN_PASS_FIELD;
@@ -61,7 +61,25 @@ public final class NetMenuScreen extends Menu {
             setPasswordCharacter('*');
         }};
         LOGIN_LOGIN_BUTTON = getClickedActor(new TextButton("LOG IN", uiSkin), event -> {
-            //TODO: login request + alert/next menu
+            NetController.updateAuthorization(LOGIN_NAME_FIELD.getText(), LOGIN_PASS_FIELD.getText());
+            NetController.sendGet("/login", "", new Net.HttpResponseListener() {
+                @Override
+                public void handleHttpResponse(Net.HttpResponse httpResponse) {
+                    if (httpResponse.getResultAsString().equals("true")) {
+                        Vars.game.setScreen(RoomMenuScreen.getInstance());
+                    } else {
+                        setStyleAndText(LOGIN_NAME_LABEL, "red", "BAD CREDENTIALS");
+                    }
+                }
+
+                @Override
+                public void failed(Throwable t) {
+                    setStyleAndText(LOGIN_NAME_LABEL, "red", "CONNECT TROUBLE");
+                }
+
+                @Override
+                public void cancelled() {}
+            });
         });
         LOGIN_REGISTRATION_BUTTON = getClickedActor(
                 new TextButton("REGISTRATION", uiSkin),
