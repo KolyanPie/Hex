@@ -38,7 +38,8 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean addUser(User user) {
-        if (existUserByUsername(user.getUsername())) {
+        String username = user.getUsername();
+        if (existUserByUsername(username) || !username.trim().equals(username) || username.equals("")) {
             return false;
         }
         String password = user.getPassword();
