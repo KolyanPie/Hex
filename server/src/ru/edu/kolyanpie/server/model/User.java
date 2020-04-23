@@ -2,6 +2,7 @@ package ru.edu.kolyanpie.server.model;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "usr")
@@ -11,6 +12,11 @@ public class User {
     private Long id;
     private String username;
     private String password;
+
+    @OneToMany(mappedBy = "blue", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Game> blueGames;
+    @OneToMany(mappedBy = "red", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Game> redGames;
 
     public Long getId() {
         return id;
@@ -34,6 +40,22 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<Game> getBlueGames() {
+        return blueGames;
+    }
+
+    public void setBlueGames(Set<Game> blueGames) {
+        this.blueGames = blueGames;
+    }
+
+    public Set<Game> getRedGames() {
+        return redGames;
+    }
+
+    public void setRedGames(Set<Game> redGames) {
+        this.redGames = redGames;
     }
 
     @Override
