@@ -2,8 +2,7 @@ package ru.edu.kolyanpie.controller;
 
 import com.badlogic.gdx.utils.Base64Coder;
 
-import static ru.edu.kolyanpie.util.Preferences.AUTHORIZATION;
-import static ru.edu.kolyanpie.util.Preferences.HEX_PREF;
+import static ru.edu.kolyanpie.util.Preferences.*;
 
 public final class PreferencesController {
 
@@ -14,10 +13,10 @@ public final class PreferencesController {
     }
 
     public static String getAuthorizationName() {
-        return HEX_PREF.getString(AUTHORIZATION, ":").split(":")[0];
+        return HEX_PREF.getString(AUTHORIZATION, AUTHORIZATION_DEFAULT).split(":")[0];
     }
 
     public static String getAuthorizationPass() {
-        return HEX_PREF.getString(AUTHORIZATION, ":").split(":")[1];
+        return HEX_PREF.getString(AUTHORIZATION, AUTHORIZATION_DEFAULT).split(":")[1];
     }
 }

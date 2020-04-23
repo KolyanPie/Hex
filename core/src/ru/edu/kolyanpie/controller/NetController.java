@@ -4,8 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
 import com.badlogic.gdx.utils.Json;
 
-import static ru.edu.kolyanpie.util.Preferences.AUTHORIZATION;
-import static ru.edu.kolyanpie.util.Preferences.HEX_PREF;
+import static ru.edu.kolyanpie.util.Preferences.*;
 
 public final class NetController {
     private static final Net.HttpRequest jsonRequest = new Net.HttpRequest(Net.HttpMethods.POST) {{
@@ -18,14 +17,14 @@ public final class NetController {
     public static void sendGet(String path, String params, Net.HttpResponseListener listener) {
         getRequest.setUrl(url + path);
         getRequest.setContent(params);
-        getRequest.setHeader("Authorization", "Basic " + HEX_PREF.getString(AUTHORIZATION, "Og=="));
+        getRequest.setHeader("Authorization", "Basic " + HEX_PREF.getString(AUTHORIZATION, AUTHORIZATION_DEFAULT));
         Gdx.net.sendHttpRequest(getRequest, listener);
     }
 
     public static void sendJson(String path, String json, Net.HttpResponseListener listener) {
         jsonRequest.setUrl(url + path);
         jsonRequest.setContent(json);
-        jsonRequest.setHeader("Authorization", "Basic " + HEX_PREF.getString(AUTHORIZATION, "Og=="));
+        jsonRequest.setHeader("Authorization", "Basic " + HEX_PREF.getString(AUTHORIZATION, AUTHORIZATION_DEFAULT));
         Gdx.net.sendHttpRequest(jsonRequest, listener);
     }
 

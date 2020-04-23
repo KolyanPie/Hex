@@ -8,6 +8,8 @@ public enum Preferences {
 
     public static final String AUTHORIZATION = "authorization";
 
+    public static final String AUTHORIZATION_DEFAULT = "Og==";
+
     private final com.badlogic.gdx.Preferences prefs;
 
     Preferences(String file) {
