@@ -22,4 +22,9 @@ public class UserController {
         return !userService.existUserByUsername(username);
     }
 
+    @GetMapping("/login")
+    public boolean isLogin() { 
+        return true;
+    }
+
 }
