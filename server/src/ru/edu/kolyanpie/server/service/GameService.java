@@ -26,6 +26,7 @@ public class GameService {
         } else {
             game.setRed(user);
         }
+        gameRepo.save(game);
         return uuid;
     }
 
