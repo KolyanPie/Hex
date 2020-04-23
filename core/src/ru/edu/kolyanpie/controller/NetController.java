@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
 import com.badlogic.gdx.utils.Base64Coder;
 import com.badlogic.gdx.utils.Json;
-import ru.edu.kolyanpie.Vars;
+
+import static ru.edu.kolyanpie.util.Preferences.AUTHORIZATION;
+import static ru.edu.kolyanpie.util.Preferences.HEX_PREF;
 
 public final class NetController {
     private static final Net.HttpRequest jsonRequest = new Net.HttpRequest(Net.HttpMethods.POST) {{
@@ -17,20 +19,19 @@ public final class NetController {
     public static void sendGet(String path, String params, Net.HttpResponseListener listener) {
         getRequest.setUrl(url + path);
         getRequest.setContent(params);
-        getRequest.setHeader("Authorization", "Basic " + Vars.preferences.getString("Authorization", "Og=="));
+        getRequest.setHeader("Authorization", "Basic " + HEX_PREF.getString(AUTHORIZATION, "Og=="));
         Gdx.net.sendHttpRequest(getRequest, listener);
     }
 
     public static void sendJson(String path, String json, Net.HttpResponseListener listener) {
         jsonRequest.setUrl(url + path);
         jsonRequest.setContent(json);
-        jsonRequest.setHeader("Authorization", "Basic " + Vars.preferences.getString("Authorization", "Og=="));
+        jsonRequest.setHeader("Authorization", "Basic " + HEX_PREF.getString(AUTHORIZATION, "Og=="));
         Gdx.net.sendHttpRequest(jsonRequest, listener);
     }
 
     public static void updateAuthorization(String name, String pass) {
-        Vars.preferences.putString("Authorization", Base64Coder.encodeString(name + ":" + pass));
-        Vars.preferences.flush();
+        HEX_PREF.put("Authorization", Base64Coder.encodeString(name + ":" + pass));
     }
 
     private NetController() {}
