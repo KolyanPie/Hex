@@ -12,7 +12,8 @@ import net.ddns.ktgd.menu.Menu;
 import net.ddns.ktgd.menu.MenuStage;
 import ru.edu.kolyanpie.Vars;
 import ru.edu.kolyanpie.controller.NetController;
-import ru.edu.kolyanpie.controller.PreferencesController;
+
+import static ru.edu.kolyanpie.util.Preferences.*;
 
 public final class NetMenuScreen extends Menu {
     private static final NetMenuScreen instance = new NetMenuScreen();
@@ -53,16 +54,17 @@ public final class NetMenuScreen extends Menu {
         LOGIN_NAME_LABEL = new Label("NAME", uiSkin) {{
             setAlignment(Align.center);
         }};
-        LOGIN_NAME_FIELD = new TextField("", uiSkin);
+        LOGIN_NAME_FIELD = new TextField(HEX_PREF.getString(NAME, NAME_DEFAULT), uiSkin);
         LOGIN_PASS_LABEL = new Label("PASSWORD", uiSkin) {{
             setAlignment(Align.center);
         }};
-        LOGIN_PASS_FIELD = new TextField("", uiSkin) {{
+        LOGIN_PASS_FIELD = new TextField(HEX_PREF.getString(PASS, PASS_DEFAULT), uiSkin) {{
             setPasswordMode(true);
             setPasswordCharacter('*');
         }};
         LOGIN_LOGIN_BUTTON = getClickedActor(new TextButton("LOG IN", uiSkin), event -> {
-            PreferencesController.updateAuthorization(LOGIN_NAME_FIELD.getText(), LOGIN_PASS_FIELD.getText());
+            HEX_PREF.put(NAME, LOGIN_NAME_FIELD.getText());
+            HEX_PREF.put(PASS, LOGIN_PASS_FIELD.getText());
             NetController.sendGet("/login", "", new Net.HttpResponseListener() {
                 @Override
                 public void handleHttpResponse(Net.HttpResponse httpResponse) {

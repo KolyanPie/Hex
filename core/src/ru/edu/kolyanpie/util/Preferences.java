@@ -6,9 +6,11 @@ public enum Preferences {
 
     HEX_PREF("kolyanpie/hex-pref");
 
-    public static final String AUTHORIZATION = "authorization";
+    public static final String NAME = "name";
+    public static final String PASS = "pass";
 
-    public static final String AUTHORIZATION_DEFAULT = "Og==";
+    public static final String NAME_DEFAULT = "";
+    public static final String PASS_DEFAULT = "";
 
     private final com.badlogic.gdx.Preferences prefs;
 
