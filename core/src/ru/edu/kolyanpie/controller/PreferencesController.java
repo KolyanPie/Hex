@@ -13,10 +13,10 @@ public final class PreferencesController {
     }
 
     public static String getAuthorizationName() {
-        return HEX_PREF.getString(AUTHORIZATION, AUTHORIZATION_DEFAULT).split(":")[0];
+        return Base64Coder.decodeString(HEX_PREF.getString(AUTHORIZATION, AUTHORIZATION_DEFAULT)).split(":")[0];
     }
 
     public static String getAuthorizationPass() {
-        return HEX_PREF.getString(AUTHORIZATION, AUTHORIZATION_DEFAULT).split(":")[1];
+        return Base64Coder.decodeString(HEX_PREF.getString(AUTHORIZATION, AUTHORIZATION_DEFAULT)).split(":")[1];
     }
 }
