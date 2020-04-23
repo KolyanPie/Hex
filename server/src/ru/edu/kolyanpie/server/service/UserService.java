@@ -4,6 +4,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.edu.kolyanpie.server.model.User;
 import ru.edu.kolyanpie.server.repos.UserRepo;
@@ -14,9 +15,11 @@ import java.util.List;
 @Service
 public class UserService implements UserDetailsService {
     private final UserRepo userRepo;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepo userRepo) {
+    public UserService(UserRepo userRepo, PasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -38,7 +41,11 @@ public class UserService implements UserDetailsService {
         if (existUserByUsername(user.getUsername())) {
             return false;
         }
-        //TODO: add some checking
+        String password = user.getPassword();
+        if (password.length() < 8) {
+            return false;
+        }
+        user.setPassword(passwordEncoder.encode(password));
         userRepo.save(user);
         return true;
     }
