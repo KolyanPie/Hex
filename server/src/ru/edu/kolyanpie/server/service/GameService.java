@@ -49,10 +49,25 @@ public class GameService {
 
     public String getHistory(String uuid) {
         Game game = gameRepo.findByUuid(uuid);
+
         if (game == null) {
             return "false";
         }
         return game.getHistory();
     }
 
+    public boolean isUserTurn(User user, String uuid) {
+        Game game = gameRepo.findByUuid(uuid);
+
+        if (game == null) {
+            return false;
+        }
+        boolean isBlueTurn = game.getHistory().length() % 2 == 0;
+        if (game.getBlue().equals(user)) {
+            return isBlueTurn;
+        } else if (game.getRed().equals(user)) {
+            return !isBlueTurn;
+        }
+        return false;
+    }
 }

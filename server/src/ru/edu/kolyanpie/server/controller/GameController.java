@@ -33,4 +33,14 @@ public class GameController {
         }
     }
 
+    @GetMapping("/{uuid}")
+    public String hetHistory(@PathVariable String uuid) {
+        return gameService.getHistory(uuid);
+    }
+
+    @GetMapping("/turn/{uuid}")
+    public boolean isMyTurn(@AuthenticationPrincipal User user, @PathVariable String uuid) {
+        return gameService.isUserTurn(user, uuid);
+    }
+
 }
