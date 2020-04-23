@@ -69,7 +69,7 @@ public final class NetMenuScreen extends Menu {
                 @Override
                 public void handleHttpResponse(Net.HttpResponse httpResponse) {
                     if (httpResponse.getResultAsString().equals("true")) {
-                        Vars.game.setScreen(RoomMenuScreen.getInstance());
+                        Gdx.app.postRunnable(() -> Vars.game.setScreen(RoomMenuScreen.getInstance()));
                     } else {
                         setStyleAndText(LOGIN_NAME_LABEL, "red", "BAD CREDENTIALS");
                     }
