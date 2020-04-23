@@ -17,14 +17,14 @@ public final class NetController {
     public static void sendGet(String path, String params, Net.HttpResponseListener listener) {
         getRequest.setUrl(url + path);
         getRequest.setContent(params);
-        getRequest.setHeader("Authorization", "Basic " + Vars.preferences.getString("Authorization", "MTox"));
+        getRequest.setHeader("Authorization", "Basic " + Vars.preferences.getString("Authorization", "Og=="));
         Gdx.net.sendHttpRequest(getRequest, listener);
     }
 
     public static void sendJson(String path, String json, Net.HttpResponseListener listener) {
         jsonRequest.setUrl(url + path);
         jsonRequest.setContent(json);
-        jsonRequest.setHeader("Authorization", "Basic " + Vars.preferences.getString("Authorization", "MTox"));
+        jsonRequest.setHeader("Authorization", "Basic " + Vars.preferences.getString("Authorization", "Og=="));
         Gdx.net.sendHttpRequest(jsonRequest, listener);
     }
 
